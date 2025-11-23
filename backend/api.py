@@ -22,11 +22,12 @@ app = FastAPI(
     description="An AI agent that explores GitHub repositories using specialized tools.",
 )
 
-origins = [
-    "http://localhost:3003",
-    "http://127.0.0.1:3000",
-    "https://spoon-git-1.onrender.com",
-]
+origins_str = os.environ.get("ALLOWED_CORS_ORIGINS")
+
+if origins_str:
+    origins = [o.strip() for o in origins_str.split(",")]
+else:
+    origins = []
 
 app.add_middleware(
     CORSMiddleware,
@@ -62,7 +63,7 @@ def initialize_agent():
         base_url=os.environ.get("OPENAI_API_BASE_URL"),
         api_key=openai_key,
         model_name=os.environ.get("OPENAI_MODEL_NAME"),
-        enable_short_term_memory=False,  # Use False for stateless API calls
+        enable_short_term_memory=False,  # Using False for stateless API calls
     )
 
     return SpoonReactAI(
@@ -110,7 +111,6 @@ def create_new_agent_instance() -> Optional[SpoonReactAI]:
     if not openai_key:
         return None
 
-    # Only instantiate the ChatBot (which uses the key) and the agent
     llm_chatbot = ChatBot(**LLM_CHATBOT_CONFIG)
 
     return SpoonReactAI(llm=llm_chatbot, tools=TOOL_INSTANCES)
@@ -170,7 +170,6 @@ async def ask_repo_agent(query: AgentQuery):
                 "Answer:"
             )
 
-            # ✅ Direct OpenAI call
             completion = await openai_client.chat.completions.create(
                 model=os.environ.get("OPENAI_MODEL_NAME", "gpt-4o"),
                 messages=[
@@ -189,3 +188,12 @@ async def ask_repo_agent(query: AgentQuery):
 
     except Exception as e:
         return {"error": f"An error occurred during agent execution: {e}"}, 500
+
+
+@app.get("/healthz", tags=["Status"])
+async def healthz():
+    """
+    Health check endpoint. Returns a 200 OK status
+    to indicate the application is running and responsive.
+    """
+    return {"status": "ok", "message": "Service is running"}
