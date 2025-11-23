@@ -1,3 +1,6 @@
+# Youtube link
+[YouTube](https://www.youtube.com/watch?v=5TJU-lM4tVo)
+
 # GitHub Repo AI Agent
 
 An intelligent, full-stack AI application designed to explore, analyze, and explain GitHub repositories. This tool combines a powerful Python-based AI agent with a modern, reactive web interface to help developers quickly understand unfamiliar codebases.
