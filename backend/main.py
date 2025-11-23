@@ -133,7 +133,7 @@ class GitHubFileFetcherTool(BaseTool):
     ):
         url = f"https://api.github.com/repos/{owner}/{repo}/contents/{file_path}?ref={branch}"
         headers = {
-            "Authorization": f"token {os.environ['GITHUB_API_KEY']}", 
+            "Authorization": f"token {os.environ['GITHUB_API_KEY']}",
             "Accept": "application/vnd.github.v3+json",
         }
         async with httpx.AsyncClient() as client:
@@ -169,8 +169,8 @@ class GitHubRepoInfoTool(BaseTool):
 
     async def execute(self, owner: str, repo: str, **kwargs):
         url = f"https://api.github.com/repos/{owner}/{repo}"
-        headers = { # ⭐️ ADD THIS BLOCK
-            "Authorization": f"token {os.environ['GITHUB_API_KEY']}", 
+        headers = {  # ⭐️ ADD THIS BLOCK
+            "Authorization": f"token {os.environ['GITHUB_API_KEY']}",
             "Accept": "application/vnd.github.v3+json",
         }
         async with aiohttp.ClientSession() as session:
@@ -225,8 +225,8 @@ class GitHubRepoTreeTool(BaseTool):
 
     async def execute(self, owner: str, repo: str, branch: str = "main", **kwargs):
         url = f"https://api.github.com/repos/{owner}/{repo}/git/trees/{branch}?recursive=1"
-        headers = { # ⭐️ ADD THIS BLOCK
-            "Authorization": f"token {os.environ['GITHUB_API_KEY']}", 
+        headers = {  # ⭐️ ADD THIS BLOCK
+            "Authorization": f"token {os.environ['GITHUB_API_KEY']}",
             "Accept": "application/vnd.github.v3+json",
         }
         async with httpx.AsyncClient() as client:
@@ -259,8 +259,8 @@ class GitHubSubdirTreeTool(BaseTool):
         self, owner: str, repo: str, subdir: str, branch: str = "main", **kwargs
     ):
         url = f"https://api.github.com/repos/{owner}/{repo}/git/trees/{branch}?recursive=1"
-        headers = { # ⭐️ ADD THIS BLOCK
-            "Authorization": f"token {os.environ['GITHUB_API_KEY']}", 
+        headers = {
+            "Authorization": f"token {os.environ['GITHUB_API_KEY']}",
             "Accept": "application/vnd.github.v3+json",
         }
         async with httpx.AsyncClient() as client:

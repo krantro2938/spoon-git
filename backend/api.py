@@ -59,7 +59,7 @@ def initialize_agent():
 
     llm_chatbot = ChatBot(
         use_llm_manager=True,
-        llm_provider="openai",
+        llm_provider=os.environ.get("LLM_PROVIDER"),
         base_url=os.environ.get("OPENAI_API_BASE_URL"),
         api_key=openai_key,
         model_name=os.environ.get("OPENAI_MODEL_NAME"),
