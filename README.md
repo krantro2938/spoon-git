@@ -14,6 +14,7 @@ This project allows users to input a GitHub repository URL and ask natural langu
 ### Key Capabilities
 - **Repository Exploration**: Visualize file trees and directory structures.
 - **Code Analysis**: Search for specific code patterns or filenames.
+- **Fixing Issues**: Ask it to fix any issue - it will guide through the process of fixing any issue.
 - **Contextual Q&A**: Ask questions like "How does authentication work?" or "Where is the API entry point?" and get cited answers.
 - **Interactive UI**: A chat-based interface for seamless interaction with the agent.
 
@@ -53,4 +54,4 @@ To run the full stack locally, you will need to start both the backend and front
 
 ## 📄 License
 
-MIT License.
+Apache 2.0 License.
