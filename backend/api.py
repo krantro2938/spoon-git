@@ -140,7 +140,10 @@ async def ask_repo_agent(query: AgentQuery):
         if message.role == "user":
             full_conversation_prompt += f"USER: {message.content}\n"
         elif message.role == "assistant":
-            full_conversation_prompt += f"ASSISTANT: {message.content}\n"
+            full_conversation_prompt += (
+                f"ASSISTANT: not shown for optimization purposes\n"
+            )
+            # full_conversation_prompt += f"ASSISTANT: {message.content}\n"
 
     full_conversation_prompt += f"USER: {query.user_prompt}"
 
