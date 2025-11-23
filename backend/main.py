@@ -132,13 +132,17 @@ class GitHubFileFetcherTool(BaseTool):
         self, owner: str, repo: str, file_path: str, branch: str = "main", **kwargs
     ):
         url = f"https://api.github.com/repos/{owner}/{repo}/contents/{file_path}?ref={branch}"
+        headers = {
+            "Authorization": f"token {os.environ['GITHUB_API_KEY']}", 
+            "Accept": "application/vnd.github.v3+json",
+        }
         async with httpx.AsyncClient() as client:
-            r = await client.get(url)
+            r = await client.get(url, headers=headers)
             if r.status_code == 200:
                 data = r.json()
                 if data["type"] == "file":
                     content = base64.b64decode(data["content"]).decode("utf-8")
-                    preview = content  # ⚠️ Critical: keep small
+                    preview = content
                     # if len(content) > 2000:
                     #     preview += "\n... (truncated)"
                     return {
@@ -165,8 +169,12 @@ class GitHubRepoInfoTool(BaseTool):
 
     async def execute(self, owner: str, repo: str, **kwargs):
         url = f"https://api.github.com/repos/{owner}/{repo}"
+        headers = { # ⭐️ ADD THIS BLOCK
+            "Authorization": f"token {os.environ['GITHUB_API_KEY']}", 
+            "Accept": "application/vnd.github.v3+json",
+        }
         async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
+            async with session.get(url, headers=headers) as response:
                 data = await response.json()
                 return {
                     "full_name": data.get("full_name"),
@@ -217,8 +225,12 @@ class GitHubRepoTreeTool(BaseTool):
 
     async def execute(self, owner: str, repo: str, branch: str = "main", **kwargs):
         url = f"https://api.github.com/repos/{owner}/{repo}/git/trees/{branch}?recursive=1"
+        headers = { # ⭐️ ADD THIS BLOCK
+            "Authorization": f"token {os.environ['GITHUB_API_KEY']}", 
+            "Accept": "application/vnd.github.v3+json",
+        }
         async with httpx.AsyncClient() as client:
-            r = await client.get(url)
+            r = await client.get(url, headers=headers)
             if r.status_code != 200:
                 return {"error": "Failed to fetch repo structure."}
         tree = r.json().get("tree", [])
@@ -247,8 +259,12 @@ class GitHubSubdirTreeTool(BaseTool):
         self, owner: str, repo: str, subdir: str, branch: str = "main", **kwargs
     ):
         url = f"https://api.github.com/repos/{owner}/{repo}/git/trees/{branch}?recursive=1"
+        headers = { # ⭐️ ADD THIS BLOCK
+            "Authorization": f"token {os.environ['GITHUB_API_KEY']}", 
+            "Accept": "application/vnd.github.v3+json",
+        }
         async with httpx.AsyncClient() as client:
-            r = await client.get(url)
+            r = await client.get(url, headers=headers)
             if r.status_code != 200:
                 return {"error": "Failed to fetch repo structure."}
         full_tree = r.json().get("tree", [])
