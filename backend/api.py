@@ -153,6 +153,7 @@ async def ask_repo_agent(query: AgentQuery):
                 "Thinking completed",
                 "No action needed",
                 "Task finished",
+                "Stuck in loop",
             ]
         ):
             openai_client = AsyncOpenAI(
