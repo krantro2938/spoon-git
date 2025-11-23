@@ -249,7 +249,7 @@ export function UserInput() {
               }}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="Ask the AI about the selected GitHub repository..."
-              className=" flex-1 rounded-2xl p-4 min-h-28 border-none resize-none focus-visible:ring-0 focus-visible:ring-offset-0 overflow-y-auto leading-relaxed  bg-black text-stone-400"
+              className=" flex-1 rounded-2xl p-4 min-h-28 max-h-28 border-none resize-none focus-visible:ring-0 focus-visible:ring-offset-0 overflow-y-auto leading-relaxed  bg-black text-stone-400"
             />
             <Button
               onClick={() => handleSubmit()}
